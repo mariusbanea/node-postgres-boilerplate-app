@@ -33,3 +33,9 @@
         * __todo-service.js__ Service file for the Controller connection witht the Model
     * __middleware__ folder contains functions that are used by the controller in multiple places
 * __test__ folder contains the Test files
+
+## Local Node scripts
+* To install the node project ===> npm install
+* To migrate the database ===> npm run migrate -- 1
+* To run Node server (on port 8000) ===> npm run dev
+* To run tests ===> npm run test

@@ -1,7 +1,7 @@
 {
-  "name": "express-boilerplate",
-  "version": "0.0.1",
-  "description": "",
+  "name": "thinkful-node-postgres-boilerplate-app",
+  "version": "1.0.0",
+  "description": "Node and PostgreSQL Boilerplate app",
   "main": "server.js",
   "scripts": {
     "test": "mocha --require test/setup.js --watch",
@@ -12,7 +12,7 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "author": "Thomas `tomatao` Hudspith-Tatham <iammotivated@gmail.com>",
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
