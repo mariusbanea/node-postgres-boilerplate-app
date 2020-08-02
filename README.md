@@ -2,9 +2,10 @@
 ## How to set it up
 * Clone this repository to your local machine
 * Install the dependencies for the project (`npm install`)
+* If there are high vulnerabilities reported during the install, run (`npm audit fix --force`)
 * Ensure your PostgreSQL server is running
-* Create a User for this exercise
-* Create a database for the exercise with your user as the owner
+* Create a User for this project
+* Create a database for the project with your user as the owner
 * Rename the `example.env` file to `.env` and update the following fields with your database credentials:
   ```
    MIGRATION_DB_NAME=
@@ -15,6 +16,17 @@
 * Run the command `npm run migrate -- 1` to create the database tables
 * run the command `npm t`
 * You should see output from 10 integration tests, all passing.
+
+
+## Local Node scripts
+* To install the node project ===> npm install
+* To fix vulnerabilities after installation ===> npm audit fix --force
+* To migrate the database ===> npm run migrate -- 1
+* To run Node server (on port 8000) ===> npm run dev
+* To run tests ===> npm run test
+
+
+
 
 ## App Structure
 
@@ -33,9 +45,3 @@
         * __todo-service.js__ Service file for the Controller connection witht the Model
     * __middleware__ folder contains functions that are used by the controller in multiple places
 * __test__ folder contains the Test files
-
-## Local Node scripts
-* To install the node project ===> npm install
-* To migrate the database ===> npm run migrate -- 1
-* To run Node server (on port 8000) ===> npm run dev
-* To run tests ===> npm run test
