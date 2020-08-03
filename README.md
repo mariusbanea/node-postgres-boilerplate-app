@@ -36,12 +36,12 @@
     * __server.js__ is the entry point of the Controller logic (where all the general app settings live)
     * __app.js__ is the starting pint for the routes
 
-    * __todo__ folder contains the router with all the todo API endpoints
-        * __todo-router.js__ Todo Router
+    * __pancake__ folder contains the router with all the pancake API endpoints
+        * __pancake-router.js__ Pancake Router
             * GET Endpoint: Add a GET endpoint to this server
             * POST Endpoint: Add a POST endpoint to this server
             * DELETE Endpoint: Add a Delete endpoint to this server
             * PATCH Endpoint: Add a PATCH Endpoint to this server
-        * __todo-service.js__ Service file for the Controller connection witht the Model
+        * __pancake-service.js__ Service file for the Controller connection witht the Model
     * __middleware__ folder contains functions that are used by the controller in multiple places
 * __test__ folder contains the Test files

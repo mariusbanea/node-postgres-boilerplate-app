@@ -1,30 +1,30 @@
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
+require('dotenv').config()
+const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
+const helmet = require('helmet')
+const { NODE_ENV } = require('./config')
+const errorHandler = require('./middleware/error-handler')
+const pancakeRouter = require('./pancake/pancake-router')
 
-button {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	background: none;
-	font-size: 100%;
-	vertical-align: baseline;
-	font-family: inherit;
-	font-weight: inherit;
-	color: inherit;
-	-webkit-appearance: none;
-	appearance: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
-	font-smoothing: antialiased;
-}
+const app = express()
 
-body {
-	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	line-height: 1.4em;
-	background: #f5f5f5;
+const morganOption = (NODE_ENV === 'production') ?
+    'tiny' :
+    'common';
+
+app.use(morgan(morganOption, {
+    skip: () => NODE_ENV === 'test',
+}))
+app.use(cors())
+app.use(helmet())
+
+app.use(express.static('public'))
+
+app.use('/api/pancakes', pancakeRouter)
+app.use(errorHandler)
+
+module.exports = app;
 	color: #4d4d4d;
 	min-width: 230px;
 	max-width: 550px;
@@ -44,7 +44,7 @@ input[type="checkbox"] {
 	display: none;
 }
 
-#todoapp {
+#pancakeapp {
 	background: #fff;
 	margin: 130px 0 40px 0;
 	position: relative;
@@ -52,25 +52,25 @@ input[type="checkbox"] {
 	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
-#todoapp input::-webkit-input-placeholder {
+#pancakeapp input::-webkit-input-placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: #e6e6e6;
 }
 
-#todoapp input::-moz-placeholder {
+#pancakeapp input::-moz-placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: #e6e6e6;
 }
 
-#todoapp input::input-placeholder {
+#pancakeapp input::input-placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: #e6e6e6;
 }
 
-#todoapp h1 {
+#pancakeapp h1 {
 	position: absolute;
 	top: -155px;
 	width: 100%;
@@ -83,7 +83,7 @@ input[type="checkbox"] {
 	text-rendering: optimizeLegibility;
 }
 
-#new-todo,
+#new-pancake,
 .edit {
 	position: relative;
 	margin: 0;
@@ -104,7 +104,7 @@ input[type="checkbox"] {
 	font-smoothing: antialiased;
 }
 
-#new-todo {
+#new-pancake {
 	padding: 16px 16px 16px 60px;
 	border: none;
 	background: rgba(0, 0, 0, 0.003);
@@ -142,39 +142,39 @@ label[for='toggle-all'] {
 	color: #737373;
 }
 
-#todo-list {
+#pancake-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-#todo-list li {
+#pancake-list li {
 	position: relative;
 	font-size: 24px;
 	border-bottom: 1px solid #ededed;
 }
 
-#todo-list li:last-child {
+#pancake-list li:last-child {
 	border-bottom: none;
 }
 
-#todo-list li.editing {
+#pancake-list li.editing {
 	border-bottom: none;
 	padding: 0;
 }
 
-#todo-list li.editing .edit {
+#pancake-list li.editing .edit {
 	display: block;
 	width: 506px;
 	padding: 13px 17px 12px 17px;
 	margin: 0 0 0 43px;
 }
 
-#todo-list li.editing .view {
+#pancake-list li.editing .view {
 	display: none;
 }
 
-#todo-list li .toggle {
+#pancake-list li .toggle {
 	text-align: center;
 	width: 40px;
 	/* auto, since non-WebKit browsers doesn't support input styling */
@@ -188,15 +188,15 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-#todo-list li .toggle:after {
+#pancake-list li .toggle:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 }
 
-#todo-list li .toggle:checked:after {
+#pancake-list li .toggle:checked:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
-#todo-list li label {
+#pancake-list li label {
 	white-space: pre-line;
 	word-break: break-all;
 	padding: 15px 60px 15px 15px;
@@ -206,12 +206,12 @@ label[for='toggle-all'] {
 	transition: color 0.4s;
 }
 
-#todo-list li.completed label {
+#pancake-list li.completed label {
 	color: #d9d9d9;
 	text-decoration: line-through;
 }
 
-#todo-list li .destroy {
+#pancake-list li .destroy {
 	display: none;
 	position: absolute;
 	top: 0;
@@ -226,23 +226,23 @@ label[for='toggle-all'] {
 	transition: color 0.2s ease-out;
 }
 
-#todo-list li .destroy:hover {
+#pancake-list li .destroy:hover {
 	color: #af5b5e;
 }
 
-#todo-list li .destroy:after {
+#pancake-list li .destroy:after {
 	content: '×';
 }
 
-#todo-list li:hover .destroy {
+#pancake-list li:hover .destroy {
 	display: block;
 }
 
-#todo-list li .edit {
+#pancake-list li .edit {
 	display: none;
 }
 
-#todo-list li.editing:last-child {
+#pancake-list li.editing:last-child {
 	margin-bottom: -1px;
 }
 
@@ -269,12 +269,12 @@ label[for='toggle-all'] {
 	            0 17px 2px -6px rgba(0, 0, 0, 0.2);
 }
 
-#todo-count {
+#pancake-count {
 	float: left;
 	text-align: left;
 }
 
-#todo-count strong {
+#pancake-count strong {
 	font-weight: 300;
 }
 
@@ -351,11 +351,11 @@ html #clear-completed:active {
 */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	#toggle-all,
-	#todo-list li .toggle {
+	#pancake-list li .toggle {
 		background: none;
 	}
 
-	#todo-list li .toggle {
+	#pancake-list li .toggle {
 		height: 40px;
 	}
 
