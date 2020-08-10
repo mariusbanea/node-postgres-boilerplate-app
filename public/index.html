@@ -1,32 +1,29 @@
-require('dotenv').config()
-const express = require('express')
-const morgan = require('morgan')
-const cors = require('cors')
-const helmet = require('helmet')
-const { NODE_ENV } = require('./config')
-const errorHandler = require('./middleware/error-handler')
-const pancakeRouter = require('./pancake/pancake-router')
+<!doctype html>
+<html lang="en" data-framework="jquery">
 
-const app = express()
+<head>
+    <meta charset="utf-8">
+    <title>jQuery • pancakeMVC</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
 
-const morganOption = (NODE_ENV === 'production') ?
-    'tiny' :
-    'common';
-
-app.use(morgan(morganOption, {
-    skip: () => NODE_ENV === 'test',
-}))
-app.use(cors())
-app.use(helmet())
-
-app.use(express.static('public'))
-
-app.use('/api/pancakes', pancakeRouter)
-app.use(errorHandler)
-
-module.exports = apphwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-		crossorigin="anonymous"></script>
-	<script src="js/app.js"></script>
+<body>
+    <section id="pancakeapp">
+        <header id="header">
+            <h1>pancakes</h1>
+            <input id="new-pancake" placeholder="What needs to be done?" autofocus>
+        </header>
+        <section id="main">
+            <input id="toggle-all" type="checkbox">
+            <label for="toggle-all">Mark all as complete</label>
+            <ul id="pancake-list"></ul>
+        </section>
+        <footer id="footer"></footer>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

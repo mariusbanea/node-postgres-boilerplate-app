@@ -4,7 +4,9 @@ require('dotenv').config()
 
 process.env.TEST_DB_URL = process.env.DB_URL
 
-const { expect } = require('chai')
+const {
+    expect
+} = require('chai')
 const supertest = require('supertest')
 
 global.expect = expect
