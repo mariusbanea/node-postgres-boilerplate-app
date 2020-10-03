@@ -14,17 +14,20 @@ const serializePancake = pancake => ({
 
 pancakeRouter
     .route('/')
+
     //relevant
     .get((req, res, next) => {
-        const knexInstance = req.app.get('db')
-        PancakeService.getPancakes(knexInstance)
+        PancakeService.getPancakes(req.app.get('db'))
             .then(pancakes => {
                 res.json(pancakes.map(serializePancake))
             })
             .catch(next)
     })
+
     //relevant
     .post(jsonParser, (req, res, next) => {
+
+        //take the input from the user
         const {
             title,
             completed = false
@@ -33,6 +36,7 @@ pancakeRouter
             title
         }
 
+        //validate the input
         for (const [key, value] of Object.entries(newPancake))
             if (value == null)
                 return res.status(400).json({
@@ -43,6 +47,7 @@ pancakeRouter
 
         newPancake.completed = completed;
 
+        //save the input in the db
         PancakeService.insertPancake(
                 req.app.get('db'),
                 newPancake
@@ -86,8 +91,10 @@ pancakeRouter
     .get((req, res, next) => {
         res.json(serializePancake(res.pancake))
     })
+
     //relevant
     .patch(jsonParser, (req, res, next) => {
+        //take the input from the user
         const {
             title,
             completed
@@ -97,6 +104,7 @@ pancakeRouter
             completed
         }
 
+        //validate the input
         const numberOfValues = Object.values(pancakeToUpdate).filter(Boolean).length
         if (numberOfValues === 0)
             return res.status(400).json({
@@ -105,6 +113,7 @@ pancakeRouter
                 }
             })
 
+        //save the input in the db
         PancakeService.updatePancake(
                 req.app.get('db'),
                 req.params.pancake_id,
@@ -115,6 +124,7 @@ pancakeRouter
             })
             .catch(next)
     })
+
     //relevant
     .delete((req, res, next) => {
         PancakeService.deletePancake(
