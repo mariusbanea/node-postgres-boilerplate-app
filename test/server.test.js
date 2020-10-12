@@ -1,10 +1,9 @@
 const knex = require('knex')
 const app = require('../src/app');
 
-describe('Pancake API:', function () {
+describe('Pancake API:', function() {
     let db;
-    let pancakes = [
-        {
+    let pancakes = [{
             "title": "French Crepes",
             "completed": false
         },
@@ -24,7 +23,7 @@ describe('Pancake API:', function () {
             "title": "Moroccan Msemen",
             "completed": false
         }
-  ]
+    ]
 
     before('make knex instance', () => {
         db = knex({
@@ -45,8 +44,9 @@ describe('Pancake API:', function () {
         beforeEach('insert some pancakes', () => {
             return db('pancake').insert(pancakes);
         })
+
         //relevant
-        it('should respond to GET `/api/pancakes` with an array of pancakes and status 200', function () {
+        it('should respond to GET `/api/pancakes` with an array of pancakes and status 200', function() {
             return supertest(app)
                 .get('/api/pancakes')
                 .expect(200)
@@ -97,10 +97,10 @@ describe('Pancake API:', function () {
     });
 
 
-    describe('POST (create) new pancake', function () {
+    describe('POST (create) new pancake', function() {
 
         //relevant
-        it('should create and return a new pancake when provided valid data', function () {
+        it('should create and return a new pancake when provided valid data', function() {
             const newItem = {
                 'title': 'Irish Boxty'
             };
@@ -118,7 +118,7 @@ describe('Pancake API:', function () {
                 });
         });
 
-        it('should respond with 400 status when given bad data', function () {
+        it('should respond with 400 status when given bad data', function() {
             const badItem = {
                 foobar: 'broken item'
             };
@@ -138,7 +138,7 @@ describe('Pancake API:', function () {
         })
 
         //relevant
-        it('should update item when given valid data and an id', function () {
+        it('should update item when given valid data and an id', function() {
             const item = {
                 'title': 'American Pancakes'
             };
@@ -161,7 +161,7 @@ describe('Pancake API:', function () {
                 });
         });
 
-        it('should respond with 400 status when given bad data', function () {
+        it('should respond with 400 status when given bad data', function() {
             const badItem = {
                 foobar: 'broken item'
             };
@@ -188,6 +188,7 @@ describe('Pancake API:', function () {
 
     });
 
+
     describe('DELETE a pancakes by id', () => {
 
         beforeEach('insert some pancakes', () => {
@@ -205,8 +206,7 @@ describe('Pancake API:', function () {
                 })
         });
 
-        it('should respond with a 404 for an invalid id', function () {
-
+        it('should respond with a 404 for an invalid id', function() {
             return supertest(app)
                 .delete('/api/pancakes/aaaaaaaaaaaaaaaaaaaaaaaa')
                 .expect(404);

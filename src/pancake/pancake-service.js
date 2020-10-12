@@ -1,12 +1,10 @@
 const PancakeService = {
-
     //relevant
     getPancakes(db) {
         return db
             .select('*')
             .from('pancake')
     },
-
     getPancakeById(db, pancake_id) {
         return db
             .select('*')
@@ -14,7 +12,6 @@ const PancakeService = {
             .where('pancake.id', pancake_id)
             .first()
     },
-
     //relevant
     insertPancake(db, newPancake) {
         return db
@@ -25,7 +22,6 @@ const PancakeService = {
                 return rows[0]
             })
     },
-
     //relevant
     updatePancake(db, pancake_id, newPancake) {
         return db('pancake')
@@ -35,7 +31,6 @@ const PancakeService = {
             })
             .returning('*')
     },
-
     //relevant
     deletePancake(db, pancake_id) {
         return db('pancake')

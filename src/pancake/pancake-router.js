@@ -14,7 +14,6 @@ const serializePancake = pancake => ({
 
 pancakeRouter
     .route('/')
-
     //relevant
     .get((req, res, next) => {
         PancakeService.getPancakes(req.app.get('db'))
@@ -23,30 +22,27 @@ pancakeRouter
             })
             .catch(next)
     })
-
     //relevant
     .post(jsonParser, (req, res, next) => {
-
         //take the input from the user
         const {
             title,
             completed = false
         } = req.body
         const newPancake = {
-            title
-        }
-
-        //validate the input
-        for (const [key, value] of Object.entries(newPancake))
-            if (value == null)
+                title,
+                completed
+            }
+            //validate the input
+        for (const [key, value] of Object.entries(newPancake)) {
+            if (value == null) {
                 return res.status(400).json({
                     error: {
                         message: `Missing '${key}' in request body`
                     }
                 })
-
-        newPancake.completed = completed;
-
+            }
+        }
         //save the input in the db
         PancakeService.insertPancake(
                 req.app.get('db'),
@@ -60,6 +56,7 @@ pancakeRouter
             })
             .catch(next)
     })
+
 
 pancakeRouter
     .route('/:pancake_id')
@@ -91,7 +88,6 @@ pancakeRouter
     .get((req, res, next) => {
         res.json(serializePancake(res.pancake))
     })
-
     //relevant
     .patch(jsonParser, (req, res, next) => {
         //take the input from the user
@@ -100,19 +96,18 @@ pancakeRouter
             completed
         } = req.body
         const pancakeToUpdate = {
-            title,
-            completed
-        }
-
-        //validate the input
+                title,
+                completed
+            }
+            //validate the input
         const numberOfValues = Object.values(pancakeToUpdate).filter(Boolean).length
-        if (numberOfValues === 0)
+        if (numberOfValues === 0) {
             return res.status(400).json({
                 error: {
                     message: `Request body must content either 'title' or 'completed'`
                 }
             })
-
+        }
         //save the input in the db
         PancakeService.updatePancake(
                 req.app.get('db'),
@@ -124,7 +119,6 @@ pancakeRouter
             })
             .catch(next)
     })
-
     //relevant
     .delete((req, res, next) => {
         PancakeService.deletePancake(
