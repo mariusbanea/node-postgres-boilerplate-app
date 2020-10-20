@@ -17,25 +17,28 @@ pancakeRouter
     .route('/')
     //relevant
     .get((req, res, next) => {
-        //connect to the DB to get the data
+
+        //connect to the service to get the data
         PancakeService.getPancakes(req.app.get('db'))
             .then(pancakes => {
-                //map the resutls to get each one of the objects and serialize them
+                //map the results to get each one of the objects and serialize them
                 res.json(pancakes.map(serializePancake))
             })
             .catch(next)
     })
     //relevant
     .post(jsonParser, (req, res, next) => {
+
         //take the input from the user
         const {
             title,
             completed = false
         } = req.body
         const newPancake = {
-                title,
-                completed
-            }
+            title,
+            completed
+        }
+
         //validate the input
         for (const [key, value] of Object.entries(newPancake)) {
             if (value == null) {
@@ -47,6 +50,7 @@ pancakeRouter
                 })
             }
         }
+
         //save the input in the db
         PancakeService.insertPancake(
                 req.app.get('db'),
@@ -54,9 +58,9 @@ pancakeRouter
             )
             .then(pancake => {
                 res
-                    //display the 201 status code
+                //display the 201 status code
                     .status(201)
-                    //redirect the request to the origial url adding the pancake id for editing
+                    //redirect the request to the original url adding the pancake id for editing
                     .location(path.posix.join(req.originalUrl, `/${pancake.id}`))
                     //return the serialized results
                     .json(serializePancake(pancake))
@@ -76,6 +80,8 @@ pancakeRouter
                 }
             })
         }
+
+        //connect to the service to get the data
         PancakeService.getPancakeById(
                 req.app.get('db'),
                 req.params.pancake_id
@@ -95,21 +101,24 @@ pancakeRouter
             .catch(next)
     })
     .get((req, res, next) => {
+
         //get each one of the objects from the results and serialize them
         res.json(serializePancake(res.pancake))
     })
     //relevant
     .patch(jsonParser, (req, res, next) => {
+
         //take the input from the user
         const {
             title,
             completed
         } = req.body
         const pancakeToUpdate = {
-                title,
-                completed
-            }
-        //validate the input
+            title,
+            completed
+        }
+
+        //validate the input by checking the length of the pancakeToUpdate object to make sure that we have all the values
         const numberOfValues = Object.values(pancakeToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             //if there is an error show it
@@ -119,6 +128,7 @@ pancakeRouter
                 }
             })
         }
+
         //save the input in the db
         PancakeService.updatePancake(
                 req.app.get('db'),
@@ -126,6 +136,7 @@ pancakeRouter
                 pancakeToUpdate
             )
             .then(updatedPancake => {
+
                 //get each one of the objects from the results and serialize them
                 res.status(200).json(serializePancake(updatedPancake))
             })
@@ -138,7 +149,8 @@ pancakeRouter
                 req.params.pancake_id
             )
             .then(numRowsAffected => {
-                //check how many rows are effected to figure out if the delete was succesful
+
+                //check how many rows are effected to figure out if the delete was successful
                 res.status(204).json(numRowsAffected).end()
             })
             .catch(next)
