@@ -6,6 +6,7 @@ const PancakeService = require('./pancake-service')
 const pancakeRouter = express.Router()
 const jsonParser = express.json()
 
+//filter out the response to avoid showing broken data
 const serializePancake = pancake => ({
     id: pancake.id,
     title: xss(pancake.title),
@@ -16,8 +17,10 @@ pancakeRouter
     .route('/')
     //relevant
     .get((req, res, next) => {
+        //connect to the DB to get the data
         PancakeService.getPancakes(req.app.get('db'))
             .then(pancakes => {
+                //map the resutls to get each one of the objects and serialize them
                 res.json(pancakes.map(serializePancake))
             })
             .catch(next)
@@ -33,9 +36,10 @@ pancakeRouter
                 title,
                 completed
             }
-            //validate the input
+        //validate the input
         for (const [key, value] of Object.entries(newPancake)) {
             if (value == null) {
+                //if there is an error show it
                 return res.status(400).json({
                     error: {
                         message: `Missing '${key}' in request body`
@@ -50,8 +54,11 @@ pancakeRouter
             )
             .then(pancake => {
                 res
+                    //display the 201 status code
                     .status(201)
+                    //redirect the request to the origial url adding the pancake id for editing
                     .location(path.posix.join(req.originalUrl, `/${pancake.id}`))
+                    //return the serialized results
                     .json(serializePancake(pancake))
             })
             .catch(next)
@@ -62,6 +69,7 @@ pancakeRouter
     .route('/:pancake_id')
     .all((req, res, next) => {
         if (isNaN(parseInt(req.params.pancake_id))) {
+            //if there is an error show it
             return res.status(404).json({
                 error: {
                     message: `Invalid id`
@@ -74,6 +82,7 @@ pancakeRouter
             )
             .then(pancake => {
                 if (!pancake) {
+                    //if there is an error show it
                     return res.status(404).json({
                         error: {
                             message: `Pancake doesn't exist`
@@ -86,6 +95,7 @@ pancakeRouter
             .catch(next)
     })
     .get((req, res, next) => {
+        //get each one of the objects from the results and serialize them
         res.json(serializePancake(res.pancake))
     })
     //relevant
@@ -99,9 +109,10 @@ pancakeRouter
                 title,
                 completed
             }
-            //validate the input
+        //validate the input
         const numberOfValues = Object.values(pancakeToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
+            //if there is an error show it
             return res.status(400).json({
                 error: {
                     message: `Request body must content either 'title' or 'completed'`
@@ -115,6 +126,7 @@ pancakeRouter
                 pancakeToUpdate
             )
             .then(updatedPancake => {
+                //get each one of the objects from the results and serialize them
                 res.status(200).json(serializePancake(updatedPancake))
             })
             .catch(next)
@@ -126,10 +138,11 @@ pancakeRouter
                 req.params.pancake_id
             )
             .then(numRowsAffected => {
-                res.status(204).end()
+                //check how many rows are effected to figure out if the delete was succesful
+                res.status(204).json(numRowsAffected).end()
             })
             .catch(next)
     })
 
-    
+
 module.exports = pancakeRouter
