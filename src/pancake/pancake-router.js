@@ -115,7 +115,7 @@ pancakeRouter
                 pancakeToUpdate
             )
             .then(updatedPancake => {
-                res.status(200).json(serializePancake(updatedPancake[0]))
+                res.status(200).json(serializePancake(updatedPancake))
             })
             .catch(next)
     })
@@ -131,5 +131,5 @@ pancakeRouter
             .catch(next)
     })
 
-
+    
 module.exports = pancakeRouter

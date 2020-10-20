@@ -30,6 +30,9 @@ const PancakeService = {
                 id: pancake_id
             })
             .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
     },
     //relevant
     deletePancake(db, pancake_id) {
