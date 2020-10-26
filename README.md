@@ -14,16 +14,16 @@
     pg_ctl restart
     ```
 5. Create a User for this project:
-    ```sql
+    ```console
     createuser testuser
     ```
 6. Create a database for the project with your user as the owner:
-    ```sql
+    ```console
     createdb testdb
     ```
 7. Grant all privileges for the new database
     ```console
-    psql testdb (enter the password for the new db)
+    psql testdb
     ```
     ```sql
     alter user testuser with encrypted password 'qwerty';
