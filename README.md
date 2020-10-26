@@ -14,9 +14,6 @@
     pg_ctl restart
     ```
 5. Create a User for this project:
-    ```console
-    psql ( enter the password for postgressql)
-    ```
     ```sql
     createuser testuser
     ```
@@ -24,26 +21,30 @@
     ```sql
     createdb testdb
     ```
+7. Grant all privileges for the new database
+    ```console
+    psql testdb ( enter the password for postgressql)
+    ```
     ```sql
     alter user testuser with encrypted password 'qwerty';
     grant all privileges on database testdb to testuser;
     ```
-7. Rename the `example.env` file to `.env` and update the following fields with your database credentials:
+8. Rename the `example.env` file to `.env` and update the following fields with your database credentials:
   ```console
    MIGRATION_DB_NAME=
    MIGRATION_DB_USER=
    MIGRATION_DB_PASS=
    DB_URL="postgresql://USERNAME@localhost/DATABASE_NAME"
   ```
-8. Create the database tables:
+9. Create the database tables:
     ```console
     npm run migrate -- 1
     ```
-9. Start the tests:
+10. Start the tests:
     ```console
     npm t
     ```
-10. You should see output from 10 integration tests, all passing.
+11. You should see output from 10 integration tests, all passing.
 
 
 ## Local Node scripts
