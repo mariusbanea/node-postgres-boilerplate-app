@@ -1,11 +1,33 @@
 # Node and PostgreSQL Boilerplate app
 ## How to set it up
 * Clone this repository to your local machine
-* Install the dependencies for the project (`npm install`)
-* If there are high vulnerabilities reported during the install, run (`npm audit fix --force`)
-* Ensure your PostgreSQL server is running
-* Create a User for this project
-* Create a database for the project with your user as the owner
+* Install the dependencies for the project:
+    ```console
+    npm install
+    ```
+* If there are high vulnerabilities reported during the install:
+    ```console
+    npm audit fix --force
+    ```
+* Ensure your PostgreSQL server is running:
+    ```console
+    pg_ctl restart
+    ```
+* Create a User for this project:
+    ```console
+    psql ( enter the password for postgressql)
+    ```
+    ```sql
+    createuser testuser
+    ```
+* Create a database for the project with your user as the owner:
+    ```sql
+    createdb testdb
+    ```
+    ```sql
+    alter user testuser with encrypted password 'qwerty';
+    grant all privileges on database testdb to testuser;
+    ```
 * Rename the `example.env` file to `.env` and update the following fields with your database credentials:
   ```
    MIGRATION_DB_NAME=
@@ -13,8 +35,14 @@
    MIGRATION_DB_PASS=
    DB_URL="postgresql://USERNAME@localhost/DATABASE_NAME"
   ```
-* Run the command `npm run migrate -- 1` to create the database tables
-* run the command `npm t`
+* Create the database tables:
+    ```console
+    npm run migrate -- 1
+    ```
+* Start the tests:
+    ```console
+    npm t
+    ```
 * You should see output from 10 integration tests, all passing.
 
 
