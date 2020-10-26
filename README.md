@@ -23,7 +23,7 @@
     ```
 7. Grant all privileges for the new database
     ```console
-    psql testdb ( enter the password for postgressql)
+    psql testdb (enter the password for the new db)
     ```
     ```sql
     alter user testuser with encrypted password 'qwerty';
