@@ -30,12 +30,12 @@
     grant all privileges on database testdb to testuser;
     ```
 8. Rename the `example.env` file to `.env` and update the following fields with your database credentials:
-  ```console
-   MIGRATION_DB_NAME=
-   MIGRATION_DB_USER=
-   MIGRATION_DB_PASS=
-   DB_URL="postgresql://USERNAME@localhost/DATABASE_NAME"
-  ```
+    ```console
+    MIGRATION_DB_NAME=
+    MIGRATION_DB_USER=
+    MIGRATION_DB_PASS=
+    DB_URL="postgresql://USERNAME@localhost/DATABASE_NAME"
+    ```
 9. Create the database tables:
     ```console
     npm run migrate -- 1
