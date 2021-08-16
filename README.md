@@ -9,14 +9,15 @@
     ```console
     npm audit fix --force
     ```
-4a. Ensure your PostgreSQL server is running on a Mac:
-    ```console
-    pg_ctl restart
-    ```
-4b. Ensure your PostgreSQL server is running on a Windows (example bellow is for PostgreSQL 13):
-    ```console
-    pg_ctl.exe restart -D  "C:\Program Files\PostgreSQL\13\data"
-    ```
+4. Ensure your PostgreSQL server is running
+    * on a Mac:
+        ```console
+        pg_ctl restart
+        ```
+    * on a Windows (example bellow is for PostgreSQL 13):
+        ```console
+        pg_ctl.exe restart -D  "C:\Program Files\PostgreSQL\13\data"
+        ```
 5. Create a User for this project:
     ```console
     createuser testuser
