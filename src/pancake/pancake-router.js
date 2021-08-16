@@ -18,7 +18,7 @@ pancakeRouter
     //relevant
     .get((req, res, next) => {
 
-        //connect to the service to get the data
+        // //connect to the service to get the data
         PancakeService.getPancakes(req.app.get('db'))
             .then(pancakes => {
                 //map the results to get each one of the objects and serialize them

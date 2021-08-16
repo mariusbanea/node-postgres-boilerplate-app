@@ -47,6 +47,7 @@
 11. You should see output from 10 integration tests, all passing.
 
 
+
 ## Local Node scripts
 * To install the node project ===> npm install
 * To fix vulnerabilities after installation ===> npm audit fix --force
